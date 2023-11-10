@@ -1,3 +1,5 @@
+package org.task1.number_game;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -49,8 +51,8 @@ public class Player {
         guesses.add(guess);
     }
 
-    public void enter_guess(){
-        current_guess = scanner.nextInt();
+    public void enter_guess(int current_guess){
+        this.current_guess = current_guess;
         guesses.add(current_guess);
     }
 
