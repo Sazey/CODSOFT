@@ -56,4 +56,11 @@ public class Player {
     public int getGuess(){
         return current_guess;
     }
+
+    public void restart() {
+        this.attemps_left = 9;
+        this.guesses.clear();
+        this.current_round = 1;
+        this.current_guess = 0;
+    }
 }

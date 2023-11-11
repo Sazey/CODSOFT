@@ -1,10 +1,11 @@
 package org.task1.number_game.gui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.task1.number_game.Player;
 
 import java.util.Random;
@@ -14,7 +15,7 @@ public class InterfaceController {
 
     public InterfaceController(){
         curent_round  = new Label();
-        number_to_guess  = new Label();
+        number_to_guess  = new Text();
         attempts_left  = new Label();
         response = new Label();
         text_field = new TextField();
@@ -36,7 +37,7 @@ public class InterfaceController {
     private Label curent_round;
 
     @FXML
-    private Label number_to_guess;
+    private Text number_to_guess;
 
     @FXML
     private Label attempts_left;
@@ -65,7 +66,7 @@ public class InterfaceController {
 
     @FXML
     public void setNumberToGuess(int current_round) {
-        this.number_to_guess.setText("I'm thinking of a number between 0 " + "1" + String.format("%0" + current_round + "d", 0));
+        this.number_to_guess.setText("I'm thinking of a number between 0 - " + "1" + String.format("%0" + current_round + "d", 0));
     }
 
     @FXML
@@ -75,10 +76,14 @@ public class InterfaceController {
 
     @FXML
     public int submitAnswer(){
-        System.out.println("here");
-        guess = Integer.parseInt(text_field.getText());
-        text_field.clear();
-        System.out.println("Guess: " + guess);
+        try {
+            guess = Integer.parseInt(text_field.getText());
+            text_field.clear();
+        }
+        catch (NumberFormatException e){
+            text_field.clear();
+            throw new NumberFormatException();
+        }
         return guess;
     }
 
@@ -88,13 +93,11 @@ public class InterfaceController {
 
     public void continuePlay(){
         this.yes_button.setOnAction(event -> {
-            Main.play = true;
         });
     }
 
     public void stopPlay(){
         this.no_button.setOnAction(event -> {
-            Main.play = false;
         });
     }
 
@@ -112,35 +115,34 @@ public class InterfaceController {
             return true;
         }
         else {
-            Main.play = false;
             return false;
         }
     }
 
     public void roundStart(Player player){
+        player.nextRound();
         int current_round = player.getCurrent_round();
         setCurrentRound(current_round);
         setNumberToGuess(current_round);
+        setResponse("");
 //        System.out.println("I'm thinking of a number between 0 " + "1" + String.format("%0" + current_round + "d", 0));
     }
 
     public void guess(){
         if(canGuess(player)) {
-            player.enter_guess(submitAnswer());
+            try {
+                player.enter_guess(submitAnswer());
+            }
+            catch (NumberFormatException e){
+                setResponse("Enter a number");
+                return;
+
+            }
             int current_guess = player.getGuess();
             int current_round = player.getCurrent_round();
             int current_solution = problems[current_round - 1];
             if (current_guess == current_solution) {
-                setResponse("Correct! the answer was: " + current_solution);
-                System.out.println("Continue playing? (y/n)");
-
-
-                if (true) {
-                    player.nextRound();
-                    roundStart(player);
-                } else {
-                    Main.play = false;
-                }
+                continueToPlay();
             } else if (current_guess > current_solution) {
                 setResponse("Your guess is high");
                 player.minusAttempt();
@@ -150,12 +152,44 @@ public class InterfaceController {
                 player.minusAttempt();
                 setAttemptsLeft(player.getAttempts_left());
             }
+        }else {
+            restartGame();
         }
 
     }
+    @FXML
+    private VBox main_window;
 
     public void continueToPlay(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Continue Playing?",
+                ButtonType.YES, ButtonType.NO);
+        alert.setTitle("Correct!");
+        if(alert.showAndWait().get() == ButtonType.YES){
+            roundStart(player);
+        }else {
+            Stage stage = (Stage) main_window.getScene().getWindow();
+            stage.close();
+        }
+    }
+
+    public void restartGame(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Restart Game?",
+                ButtonType.YES, ButtonType.NO);
+        alert.setTitle("Restart Game?");
+        if(alert.showAndWait().get() == ButtonType.YES){
+            create_problems();
+            player.restart();
+            setCurrentRound(1);
+            setNumberToGuess(player.getCurrent_round());
+            setResponse("");
+            text_field.clear();
+            setAttemptsLeft(player.getAttempts_left());
+        }else {
+            Stage stage = (Stage) main_window.getScene().getWindow();
+            stage.close();
+        }
     }
 
 }

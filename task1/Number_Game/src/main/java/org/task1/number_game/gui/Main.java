@@ -8,9 +8,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application{
-    public static boolean play = true;
     @Override
     public void start(Stage stage) throws IOException {
+        stage.setResizable(false);
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/main_window.fxml"));
         Scene scene = new Scene(loader.load(),320,460);
         stage.setTitle("Number Guessing Game");
