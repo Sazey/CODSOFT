@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 public class Player {
 
-    Scanner scanner;
-
     String player_name;
     int attemps_left;
     int current_round;
@@ -19,7 +17,6 @@ public class Player {
     List<Integer> guesses = new ArrayList<>();
 
     public Player(String player_name){
-        scanner = new Scanner(System.in);
         this.player_name = player_name;
         attemps_left = 9;
         current_round = 1;
