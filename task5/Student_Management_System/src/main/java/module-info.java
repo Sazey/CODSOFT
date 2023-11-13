@@ -13,9 +13,9 @@ module org.task5.student_management_system {
     requires sqlite.dialect;
 //    opens org.task5.student_management_system to javafx.fxml;
     opens org.task5.student_management_system;
-    opens org.task5.student_management_system.model to javafx.fxml;
+    opens org.task5.student_management_system.model to javafx.fxml, org.hibernate.orm.core, javafx.base;
     opens org.task5.student_management_system.gui to javafx.fxml;
     opens org.task5.student_management_system.dao to java.transaction.xa;
-//    opens org.task5.student_management_system.controller;
+//    opens org.task5.student_management_system.model;
     exports org.task5.student_management_system.gui to javafx.fxml;
 }

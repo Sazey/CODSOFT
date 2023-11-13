@@ -2,6 +2,7 @@
 
 <!--<?import com.gluonhq.charm.glisten.control.TextField?>-->
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -28,6 +29,9 @@
             <TableColumn fx:id="enrollment_date_col" prefWidth="128.0" text="Enrollment Date" />
         </columns>
       </TableView>
-      <TextField fx:id="student_serach" layoutX="776.0" layoutY="61.0" prefHeight="26.0" prefWidth="235.0" promptText="Search student" />
+      <TextField fx:id="student_search" layoutX="776.0" layoutY="61.0" prefHeight="26.0" prefWidth="235.0" promptText="Search student" />
+      <Button fx:id="create_student_button" layoutY="491.0" mnemonicParsing="false" onAction="#createStudent" prefHeight="30.0" prefWidth="161.0" text="Create New Student" />
+      <Button fx:id="delete_student_button" layoutX="170.0" layoutY="491.0" mnemonicParsing="false" onAction="#removeStudent" prefHeight="30.0" prefWidth="161.0" text="Delete Student" />
+      <Button fx:id="refresh_button" layoutX="337.0" layoutY="491.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="30.0" prefWidth="161.0" text="Refresh Database" />
    </children>
 </AnchorPane>
