@@ -84,7 +84,6 @@ public class StuddntManagementSystemController implements Initializable {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(parentStage);
         stage.show();
-        stage.close();
     }
 
     @FXML
@@ -126,5 +125,6 @@ public class StuddntManagementSystemController implements Initializable {
     public void removeStudent(){
         Student student = students_view_table.getSelectionModel().getSelectedItem();
         studentDAO.deleteStudent(student.getStudentId());
+        refreshData();
     }
 }
