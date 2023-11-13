@@ -103,9 +103,9 @@ public class InterfaceController {
 
     public void create_problems() {
         for (int i = 1; i <= 9; i++) {
-            int range = Integer.parseInt("1" + String.format("%0" + i + "d", 0)) + 1;
+            int range = Integer.parseInt("1" + String.format("%0" + i + "d", 0));
 
-            problems[i - 1] = random.nextInt(range);
+            problems[i - 1] = random.nextInt(range)+1;
 //            System.out.println(problems[i-1]);
         }
     }

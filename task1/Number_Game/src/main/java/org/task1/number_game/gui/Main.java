@@ -12,7 +12,7 @@ public class Main extends Application{
     public void start(Stage stage) throws IOException {
         stage.setResizable(false);
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/main_window.fxml"));
-        Scene scene = new Scene(loader.load(),320,460);
+        Scene scene = new Scene(loader.load(),320,350);
         stage.setTitle("Number Guessing Game");
         stage.setScene(scene);
         stage.show();

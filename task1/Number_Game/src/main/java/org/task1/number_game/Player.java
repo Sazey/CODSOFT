@@ -63,4 +63,8 @@ public class Player {
         this.current_round = 1;
         this.current_guess = 0;
     }
+
+    public void clearGueses(){
+        this.guesses.clear();
+    }
 }
