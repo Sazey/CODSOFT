@@ -76,7 +76,7 @@ public class App {
             if (future.get().statusCode() == HttpURLConnection.HTTP_OK) {
                 String body = future.get().body();
 
-                double exchanged = parseJSON(body,fromCode, toCode, amount);
+                double exchanged = parseJSON(body, toCode, amount);
                 System.out.println();
                 System.out.println(amount + fromCode + " = " + exchanged + toCode);
             } else {
@@ -90,9 +90,8 @@ public class App {
 
     }
 
-    public static double parseJSON(String JSONString, String fromCode, String toCode, Double amount){
+    public static double parseJSON(String JSONString, String toCode, Double amount){
         JSONObject obj = new JSONObject(JSONString);
-//        Double baseRate = obj.getJSONObject("rates").getDouble(fromCode);
         Double quoteRate = obj.getJSONObject("rates").getDouble(toCode);
         double exchanged = amount*quoteRate;
 
